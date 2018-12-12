@@ -30,7 +30,7 @@ RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT
     docker-php-ext-install -j${NPROC} \
         intl gettext mysqli pdo_mysql exif gd zip && \
     pecl channel-update pecl.php.net && \
-    pecl install xdebug && docker-php-ext-enable xdebug && \
+    pecl install xdebug-beta && docker-php-ext-enable xdebug && \
     apt-get purge -y \
         libpng-dev \
         libzip-dev \
@@ -41,8 +41,8 @@ RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT
     composer self-update && \
     gem install sass -v 3.4.25
 
-COPY ../presetup /usr/local/bin
-COPY ../php.ini /usr/local/etc/php/
+COPY ./presetup /usr/local/bin
+COPY ./php.ini /usr/local/etc/php/
 RUN chmod +x /usr/local/bin/presetup
 
 # Set work directory to the web host path
