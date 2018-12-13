@@ -14,7 +14,7 @@ RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT
         libpng-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
-        libicu-dev locales locales-all && \
+        libicu-dev locales locales-all wget cron && \
     apt-get install -y curl cmake && \
     mkdir /tmp/libzip && cd /tmp/libzip && curl -sSLO https://libzip.org/download/libzip-1.5.1.tar.gz && \
     tar zxf libzip-1.5.1.tar.gz && cd libzip-1.5.1/ && mkdir build && cd build && cmake ../ && \
@@ -40,6 +40,15 @@ RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT
     npm i npm@latest -g && \
     composer self-update && \
     gem install sass -v 3.4.25
+
+ENV ACME_BUILD_DATE=2017-06-09
+ENV AUTO_UPGRADE=1
+ENV LE_WORKING_DIR=/acme.sh
+ENV LE_CONFIG_HOME=/acmecerts
+RUN wget -O- https://get.acme.sh | sh && crontab -l | sed 's#> /dev/null##' | crontab -
+
+VOLUME ["/acmecerts"]
+EXPOSE 443
 
 COPY ./presetup /usr/local/bin
 COPY ./php.ini /usr/local/etc/php/
