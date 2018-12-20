@@ -39,6 +39,7 @@ RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT
     apt-get autoremove -y && \
     npm i npm@latest -g && \
     composer self-update && \
+    composer global require hirak/prestissimo && \
     gem install sass -v 3.4.25
 
 ENV ACME_BUILD_DATE=2017-06-09
