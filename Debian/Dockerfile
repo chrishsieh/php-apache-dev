@@ -38,7 +38,9 @@ RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT
         libicu-dev cmake && \
     apt-get autoremove -y && \
     npm i npm@latest -g && \
-    curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get install yarn && \
     composer self-update && \
     composer global require hirak/prestissimo && \
     gem install sass -v 3.4.25
