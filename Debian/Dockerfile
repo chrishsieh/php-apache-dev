@@ -4,12 +4,13 @@ ENV DEBCONF_NOWARNINGS yes
 
 # Make info file about this build
 RUN printf "Build of chrishsieh/php-apache-dev, date: %s\n" `date -u +"%Y-%m-%dT%H:%M:%SZ"` >> /etc/BUILD && \
+    apt-get update && \
+    apt-get install -y gnupg2 && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
-    apt-get install -y gnupg2 && \
     apt-get install -y \
         gettext jq figlet \
         zip git ruby-full nodejs \
